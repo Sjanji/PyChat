@@ -55,12 +55,17 @@ class Ui_Form(QtGui.QWidget):
     
     def beforeConnect(self):
         #création de la sous-fenêtre de login
+        #ajout d'une Frame sur la grille
         self.frame = QtGui.QFrame(self)
         self.frame.setObjectName(_fromUtf8("frame01"))
         self.frame.setFixedSize(300,120)
         self.grille.addWidget(self.frame, 1, 18)
+        
+        #ajout d'une nouvelle grille sur la Frame
         self.grilleOnFrame = QtGui.QGridLayout()
         self.frame.setLayout(self.grilleOnFrame)
+        
+        #création des champs de saisies et de leurs labels
         self.label1 = QtGui.QLabel('Login', self)
         self.label1.setObjectName(_fromUtf8("labelName"))
         self.grilleOnFrame.addWidget(self.label1, 0, 0)
@@ -73,8 +78,12 @@ class Ui_Form(QtGui.QWidget):
         self.linePwd = QtGui.QLineEdit(self)
         self.linePwd.setObjectName(_fromUtf8("saisiePwd"))
         self.grilleOnFrame.addWidget(self.linePwd, 1, 1)
+        
+        #connection des champs de saisie aux méthodes de traitement du nom
         self.connect(self.lineName, QtCore.SIGNAL('returnPressed()'), self.setName)
         self.connect(self.linePwd, QtCore.SIGNAL('returnPressed()'), self.setName)
+        
+        #gestion du mouvement de la fenêtre
         self.frame.mousePressEvent = self.mousePressEventOnText 
         self.frame.mouseReleaseEvent = self.MouseButtonReleaseEventOnText
         self.frame.mouseMoveEvent = self.mouseMoveEventOnText
