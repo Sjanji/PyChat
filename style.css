@@ -1,0 +1,30 @@
+#frame01 {
+	background: rgba(125,185,232,90%);
+	border-radius: 7px;
+	}
+
+#textEdit {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 rgba(30,87,232,30%), stop: 1 rgba(125,185,232,95%));
+	color : rgba(255,34,1,100%);
+	border: 0px solid #000000;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: Bitstream Vera Sans;
+	}
+	
+#saisie {
+	background: rgba(125,185,232,90%);
+	color : white;
+	font-size: 16px;
+	}
+
+#labelName{
+	color : white;
+	font-size: 22px;
+	}
+	
+#labelPwd{
+	color : white;
+	font-size: 22px;
+	}
