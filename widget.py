@@ -4,8 +4,6 @@ from PyQt4 import QtCore, QtGui
 from client import *
 import os
 
-HOST = '127.0.0.1'    
-PORT = 50007 
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -31,7 +29,9 @@ class Ui_Form(QtGui.QWidget):
         self.move(100,100)
         self.offset = QtCore.QPoint(100,100)
         self.okToMove = False
-        self.client = Client(HOST, PORT, self)
+        self.host = '127.0.0.1'
+        self.port = 50007
+        self.client = Client(self)
         self.connected = False
         self.name = b'NoName'
         
@@ -78,10 +78,26 @@ class Ui_Form(QtGui.QWidget):
         self.linePwd = QtGui.QLineEdit(self)
         self.linePwd.setObjectName(_fromUtf8("saisiePwd"))
         self.grilleOnFrame.addWidget(self.linePwd, 1, 1)
+        self.label3 = QtGui.QLabel('Serveur', self)
+        self.label3.setObjectName(_fromUtf8("labelIp"))
+        self.grilleOnFrame.addWidget(self.label3, 2, 0)
+        self.lineIp = QtGui.QLineEdit(self)
+        self.lineIp.setText(self.host)
+        self.lineIp.setObjectName(_fromUtf8("saisieIp"))
+        self.grilleOnFrame.addWidget(self.lineIp, 2, 1)
+        self.label4 = QtGui.QLabel('Serveur', self)
+        self.label4.setObjectName(_fromUtf8("labelPort"))
+        self.grilleOnFrame.addWidget(self.label4, 3, 0)
+        self.linePort = QtGui.QLineEdit(self)
+        self.linePort.setText(str(self.port))
+        self.linePort.setObjectName(_fromUtf8("saisieIp"))
+        self.grilleOnFrame.addWidget(self.linePort, 3, 1)
         
         #connection des champs de saisie aux méthodes de traitement du nom
         self.connect(self.lineName, QtCore.SIGNAL('returnPressed()'), self.setName)
         self.connect(self.linePwd, QtCore.SIGNAL('returnPressed()'), self.setName)
+        self.connect(self.lineIp, QtCore.SIGNAL('returnPressed()'), self.setName)
+        self.connect(self.linePort, QtCore.SIGNAL('returnPressed()'), self.setName)
         
         #gestion du mouvement de la fenêtre
         self.frame.mousePressEvent = self.mousePressEventOnText 
@@ -91,7 +107,7 @@ class Ui_Form(QtGui.QWidget):
     def afterConnect(self):
         self.resize(300, 600)
         self.grille.itemAt(1).widget().deleteLater() #on efface self.frame
-        self.client.connectToServ()
+        self.client.connectToServ(self.host , self.port)
         self.client.start()
         self.connected = True
         self.addTextEdit()
@@ -166,6 +182,8 @@ class Ui_Form(QtGui.QWidget):
     
     def setName(self):
         self.name = self.lineName.text().encode('utf-8') + b' : '
+        self.host = self.lineIp.text().encode('utf-8')
+        self.port = int(self.linePort.text().encode('utf-8'))
         self.afterConnect()
 
 class ExtendedQLabel(QtGui.QLabel):

@@ -18,13 +18,8 @@
 	color : white;
 	font-size: 16px;
 	}
-
-#labelName{
-	color : white;
-	font-size: 22px;
-	}
 	
-#labelPwd{
+#frame01 QLabel {
 	color : white;
 	font-size: 22px;
 	}

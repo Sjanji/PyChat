@@ -4,17 +4,15 @@ from PyQt4 import QtCore
        
 
 class Client(QtCore.QThread):
-    def __init__(self, host, port, interface):
+    def __init__(self, interface):
         QtCore.QThread.__init__(self)
         self.cmd = True
         self.interface = interface
-        self.host = host
-        self.port = port
         self.connect(self.interface, QtCore.SIGNAL('stopThread'), self.stop)
     
-    def connectToServ(self):
+    def connectToServ(self, host, port):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((self.host, self.port))
+        self.socket.connect((host, port))
         self.socket.settimeout(0.2) #socket non bloquante
     
     def setCmd(self, cmd):
